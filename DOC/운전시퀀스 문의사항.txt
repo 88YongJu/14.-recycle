@@ -1,0 +1,45 @@
+HVMT 에서 전송하는 Can 통신 주기는?(수신측과 협의필요)
+ ->san과 협의
+
+IMU 종류는? 새로운 IMU는 CAN통신인데 HVMT 를 거치는 이유?
+ -> can 타입, PLC에서 직접 수신
+
+HVMT1, 2에서 HVB 전압을 확인하는데 HVB 1번인지 2번인지?
+2가지를 다 확인하여 하나라도 벗어나면
+
+HVMT2 에서 Can 으로 데이터를 전송하는데 HVMT1에서 받아서 다시 전송하는 이유가 있나?
+can 통신, HVMT2 데이터 PLC에서 직접 수신
+
+ 2.2 Solar Panel과 Micro Grid converter feeder 전압 모니터링 값을 HVMT-01을 통해
+ 상위 제어기(NO.2 DPU, 200(LCP))에 CAN 통신으로 전송
+HVMT2 MicroGrid Feeder 전압만? 전류도?
+
+전류도 측정(CB350M CAN ID 변경했었음) - CAN 통신이라 PLC에서 직접 수신
+
+ 3.4 배터리 Charge & Discharge Relay ON/OFF
+상위제어기에서 제어안해도 되나?
+ -> SAN에 문의
+
+기본적으로 voltage 정보를 건내는데 Precharge 완료 판단은 HVMT에서 할 것인가?
+Precharge 완료조건을 HVMT에서 판단해야 한다면 PreCharge완료 voltage Gap은?
+ -> 10V
+
+Charge Relay on 조건
+①②③ 모두만족시?
+하나만이라도 만족시?
+하나만이라도 만족시 하면 ①에서 WTS-01, 02, SPS-01 Read Flag 이 3가지 상태도 하나라도 만족시?
+ -> 무엇이든 간에 하나라도 만족시 ON
+
+추진 전동기 및 호텔부하를 HVMT3번이 모두 파악할 수 있는 조건인지?
+ -> SAN에 문의
+
+Charge Relay on 조건
+SOC가 미세하게 차이나 날 시 높은 배터리를 붙여서 사용하는 순간 높았던 배터리가 더 낮아지는 상황이 되면 바로 바꿀것인지?
+ -> LDC = CHARGEline
+ -> HVB2개 동시 ON
+
+ 4.4 배터리 Charge & Discharge Relay ON/OFF
+3.4와 동일
+
+CB350M 전류 센서 테스트 필요
+ -> 완료

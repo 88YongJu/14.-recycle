@@ -1,0 +1,23 @@
+#include "gio.h"
+
+void initPort(void)   // Port Initialize
+{
+	MCUCR = (1<<PUD);
+	cli();
+	DDRA = 0b11111111;
+	DDRB = 0b11110111;
+	DDRC = 0b11111111;
+	DDRD = 0b10011010;
+	DDRE = 0b00111110;
+	DDRF = 0b11110000;
+	DDRG = 0b11111;
+	
+	PORTA = 0b00000000;
+	PORTB = 0b00000000;
+	PORTC = 0b00000000;
+	PORTD = 0b10000010;
+	PORTE = 0b11000010;
+	PORTF = 0b00000000;
+	PORTG = 0b11111;
+	sei();
+}
