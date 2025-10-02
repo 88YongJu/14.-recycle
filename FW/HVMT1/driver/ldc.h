@@ -10,8 +10,8 @@
 #define LDC_H_
 
 #include "types.h"
-#include "CAN.h"
-#include "TIMER.h"
+#include "can.h"
+#include "timer.h"
 
 #define MAX_LDC	3
 
@@ -60,30 +60,24 @@ enum {
 	INDEX_LDC1, INDEX_LDC2, INDEX_LDC3
 };
 
-struct LDC
+typedef struct
 {
-	//ldc timer
-	unsigned int timer;
-	//ldc control flag
-	boolean Run;	//CMD 전송여부
-	boolean Enable;	//LDC 동작여부
+	boolean enable;	//LDC 동작여부
+	boolean ready;
+	boolean ig;
+	boolean run;	//CMD 전송여부
+	boolean keyOn;
+	boolean fault;
+	unsigned int inputVoltage;
+	unsigned int outputVoltage;
+	unsigned int outputCurrent;
+	uint8 temperature;
+	unsigned int faults;
+}LDC;
 
-	//ldc status flag
-	boolean Rdy_fb;
-	boolean Run_fb;
-	boolean On_chk;
-	boolean Fault;
-	unsigned int IN_Vol;
-	unsigned int OUT_Vol;
-	unsigned int Cur;
-	uint8 temp;
+extern volatile LDC ldc[MAX_LDC];
 
-	unsigned int Faults;
-};
-
-volatile struct LDC ldc[MAX_LDC];
-
-void init_LDC();
-void Save_LDC_Status(unsigned char index, char *data);
-void Save_LDC_Faults(unsigned char index, char *data);
+void initLdc();
+void saveLdcStatus(unsigned char index, char *data);
+void saveLdcFaults(unsigned char index, char *data);
 #endif /* LDC_H_ */

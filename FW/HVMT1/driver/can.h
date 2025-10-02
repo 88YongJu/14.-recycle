@@ -15,7 +15,6 @@
 #include "bms.h"
 #include "ldc.h"
 #include "evcc.h"
-#include "hvmt.h"
 
 #define MOB_RX_STD_START 0 // 표준형 수신 메일박스 시작 번호
 #define MOB_RX_STD_END 4   // 표준형 수신 메일박스 끝 번호

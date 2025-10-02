@@ -6,41 +6,40 @@
  */ 
 #include "LDC.h"
 
-volatile struct LDC ldc[MAX_LDC];
+volatile LDC ldc[MAX_LDC];
 
-void init_LDC(void)
+void initLdc(void)
 {
-	ldc[INDEX_LDC1].Run = 1;
-	ldc[INDEX_LDC1].Enable = 1;
+	ldc[INDEX_LDC1].run = 1;
+	ldc[INDEX_LDC1].enable = 1;
 	
-	ldc[INDEX_LDC2].Run = 1;
-	ldc[INDEX_LDC2].Enable = 1;
+	ldc[INDEX_LDC2].run = 1;
+	ldc[INDEX_LDC2].enable = 1;
 	
-	ldc[INDEX_LDC3].Run = 0;
-	ldc[INDEX_LDC3].Enable = 0;
+	ldc[INDEX_LDC3].run = 0;
+	ldc[INDEX_LDC3].enable = 0;
 }
 
-void Save_LDC_Status(unsigned char index, char *data)
+void saveLdcStatus(unsigned char index, char *data)
 {
-
-	ldc[index].Rdy_fb = (data[0] >> 0) & 0b00000001;
-	ldc[index].Run_fb = (data[0] >> 1) & 0b00000001;
-	ldc[index].On_chk = (data[0] >> 2) & 0b00000001;
-	ldc[index].Fault = (data[0] >> 3) & 0b00000001;
-	ldc[index].IN_Vol = data[1];
-	ldc[index].IN_Vol |= data[2] << 8;
-	ldc[index].OUT_Vol = data[3];
-	ldc[index].OUT_Vol |= data[4] << 8;
-	ldc[index].Cur = data[5];
-	ldc[index].Cur |= data[6] << 8;
-	ldc[index].temp = data[7];//-40;
+	ldc[index].ready = (data[0] >> 0) & 0b00000001;
+	ldc[index].run = (data[0] >> 1) & 0b00000001;
+	ldc[index].keyOn = (data[0] >> 2) & 0b00000001;
+	ldc[index].fault = (data[0] >> 3) & 0b00000001;
+	ldc[index].inputVoltage = data[1];
+	ldc[index].inputVoltage |= data[2] << 8;
+	ldc[index].outputVoltage = data[3];
+	ldc[index].outputVoltage |= data[4] << 8;
+	ldc[index].outputCurrent = data[5];
+	ldc[index].outputCurrent |= data[6] << 8;
+	ldc[index].temperature = data[7];//-40;
 }
 //voltage 100mV, current 100mA
 //EX>1000->100.0V
 //EX>1000->100.0A
 
-void Save_LDC_Faults(unsigned char index, char *data)
+void saveLdcFaults(unsigned char index, char *data)
 {
-	ldc[index].Faults = data[0];
-	ldc[index].Faults |= data[1] << 8;
+	ldc[index].faults = data[0];
+	ldc[index].faults |= data[1] << 8;
 }

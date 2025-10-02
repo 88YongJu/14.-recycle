@@ -44,6 +44,7 @@ C_SRCS +=  \
 ../driver/evcc.c \
 ../driver/gio.c \
 ../driver/hvmt.c \
+../driver/ldc.c \
 ../driver/max11162.c \
 ../driver/queue.c \
 ../driver/spi.c \
@@ -65,6 +66,7 @@ driver/cb350m.o \
 driver/evcc.o \
 driver/gio.o \
 driver/hvmt.o \
+driver/ldc.o \
 driver/max11162.o \
 driver/queue.o \
 driver/spi.o \
@@ -79,6 +81,7 @@ driver/cb350m.o \
 driver/evcc.o \
 driver/gio.o \
 driver/hvmt.o \
+driver/ldc.o \
 driver/max11162.o \
 driver/queue.o \
 driver/spi.o \
@@ -93,6 +96,7 @@ driver/cb350m.d \
 driver/evcc.d \
 driver/gio.d \
 driver/hvmt.d \
+driver/ldc.d \
 driver/max11162.d \
 driver/queue.d \
 driver/spi.d \
@@ -107,6 +111,7 @@ driver/cb350m.d \
 driver/evcc.d \
 driver/gio.d \
 driver/hvmt.d \
+driver/ldc.d \
 driver/max11162.d \
 driver/queue.d \
 driver/spi.d \
@@ -164,6 +169,13 @@ driver/gio.o: ../driver/gio.c
 	
 
 driver/hvmt.o: ../driver/hvmt.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+driver/ldc.o: ../driver/ldc.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -mmcu=at90can128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\at90can128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

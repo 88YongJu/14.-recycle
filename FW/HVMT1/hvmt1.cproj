@@ -173,6 +173,12 @@
     <Compile Include="driver\hvmt.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="driver\ldc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="driver\ldc.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="driver\max11162.c">
       <SubType>compile</SubType>
     </Compile>

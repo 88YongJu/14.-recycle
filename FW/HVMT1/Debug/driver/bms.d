@@ -15,10 +15,8 @@ driver/bms.d driver/bms.o: ../driver/bms.c ../driver/bms.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  ../driver/can.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../driver/timer.h ../driver/ldc.h ../driver/CAN.h ../driver/TIMER.h \
- ../driver/evcc.h ../driver/BMS.h ../driver/hvmt.h ../driver/max11162.h \
- ../driver/exiom.h ../driver/spi.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\compat\deprecated.h
+ ../driver/timer.h ../driver/ldc.h ../driver/evcc.h ../driver/CAN.h \
+ ../driver/BMS.h
 
 ../driver/bms.h:
 
@@ -58,20 +56,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../driver/ldc.h:
 
-../driver/CAN.h:
-
-../driver/TIMER.h:
-
 ../driver/evcc.h:
 
+../driver/CAN.h:
+
 ../driver/BMS.h:
-
-../driver/hvmt.h:
-
-../driver/max11162.h:
-
-../driver/exiom.h:
-
-../driver/spi.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\compat\deprecated.h:

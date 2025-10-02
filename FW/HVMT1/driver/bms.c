@@ -7,10 +7,14 @@
 
 #include "bms.h"
 
-volatile unsigned int ui_Bat1_runtime = 0;
-volatile unsigned int ui_Bat2_runtime = 0;
+volatile struct BMS bms[MAX_BAT];
 
-volatile unsigned int runtime[MAX_BAT];
+struct MOb bms1HeartBeatmsg = {CANID_BAT1 + HEARTBIT, CAN_STD, {CAN_CMD1, CAN_CMD2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},8};
+struct MOb bms2HeartBeatmsg = {CANID_BAT2 + HEARTBIT, CAN_STD, {CAN_CMD1, CAN_CMD2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},8};
+
+
+volatile unsigned int bms1Runtime = 0;
+volatile unsigned int bms2Runtime = 0;
 
 void saveRackStatus(uint8 index, char *data)
 {
@@ -94,7 +98,7 @@ void saveModuleTemperature(uint8 index, char *data)
 	bms[index].moduleMinTemperature |= data[5]<<8;
 }
 
-void SaveModuleHumidity(uint8 index, char *data)
+void saveModuleHumidity(uint8 index, char *data)
 {
 	bms[index].moduleMaxHumidity = data[0];
 	bms[index].moduleMaxHumidity |= data[1]<<8;
@@ -104,15 +108,22 @@ void SaveModuleHumidity(uint8 index, char *data)
 }
 
 void sendBmsHeartbeat(uint8 index)
-{
-	struct MOb sendmsg1 = {CANID_BAT1 + HEARTBIT, CAN_STD, {CAN_CMD1, CAN_CMD2, bms[INDEX_BAT1].rackVoltage, bms[INDEX_BAT1].rackVoltage>>8, 0x00, 0x00, 0x00, 0x00},8};
-	struct MOb sendmsg2 = {CANID_BAT2 + HEARTBIT, CAN_STD, {CAN_CMD1, CAN_CMD2, bms[INDEX_BAT2].rackVoltage, bms[INDEX_BAT2].rackVoltage>>8, 0x00, 0x00, 0x00, 0x00},8};
-	
-	if(index == INDEX_BAT1)	sendCan(&sendmsg1);
-	else if(index == INDEX_BAT2) sendCan(&sendmsg2);
+{	
+	if(index == INDEX_BAT1)
+	{
+		bms1HeartBeatmsg.data[2] = bms[INDEX_BAT1].rackVoltage;
+		bms1HeartBeatmsg.data[3] = bms[INDEX_BAT1].rackVoltage >> 8;
+		sendCan(&bms1HeartBeatmsg);
+	}
+	else if(index == INDEX_BAT2)
+	{
+		bms2HeartBeatmsg.data[2] = bms[INDEX_BAT2].rackVoltage;
+		bms2HeartBeatmsg.data[3] = bms[INDEX_BAT2].rackVoltage >> 8;
+		sendCan(&bms2HeartBeatmsg);
+	}
 }
 
-void Send_on_Chage(uint8 index)
+void sendChargeOnCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + CHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_CHAGE,}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + CHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_CHAGE,}, 8};
@@ -121,7 +132,7 @@ void Send_on_Chage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_off_Chage(uint8 index)
+void sendChargeOffCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + CHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_CHAGE,}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + CHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_CHAGE,}, 8};
@@ -130,7 +141,7 @@ void Send_off_Chage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_on_DisChage(uint8 index)
+void sendDischargeOnCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + DISCHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_DISCHAGE,}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + DISCHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_DISCHAGE,}, 8};
@@ -139,7 +150,7 @@ void Send_on_DisChage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_off_DisChage(uint8 index)
+void sendDischargeOffCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + DISCHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_DISCHAGE,}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + DISCHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_DISCHAGE,}, 8};
@@ -148,7 +159,7 @@ void Send_off_DisChage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_on_PreChage(uint8 index)
+void sendPrechargeOnCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + PRECHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_PRECHAGE, 0x00, 0x00, 0x00, 0x00}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + PRECHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, ON_PRECHAGE, 0x00, 0x00, 0x00, 0x00}, 8};
@@ -156,7 +167,7 @@ void Send_on_PreChage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_off_PreChage(uint8 index)
+void sendPrechargeOffCommand(uint8 index)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + PRECHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_PRECHAGE, 0x00, 0x00, 0x00, 0x00}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + PRECHARGE, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, OFF_PRECHAGE, 0x00, 0x00, 0x00, 0x00}, 8};
@@ -165,7 +176,7 @@ void Send_off_PreChage(uint8 index)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_on_Emc(uint8 index, unsigned char status)
+void sendEmgencyOnCommand(uint8 index, unsigned char status)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + EMERGENCY, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, SET_EMERYGENCY, 0x00, 0x00, 0x00, 0x00}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + EMERGENCY, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, SET_EMERYGENCY, 0x00, 0x00, 0x00, 0x00}, 8};
@@ -174,7 +185,7 @@ void Send_on_Emc(uint8 index, unsigned char status)
 	else if(index == 1)	sendCan(&sendmsg2);
 }
 
-void Send_off_Emc(uint8 index, unsigned char status)
+void sendEmgencyOffCommand(uint8 index, unsigned char status)
 {
 	struct MOb sendmsg1 = {CANID_BAT1 + EMERGENCY, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, RESET_EMERYGENCY, 0x00, 0x00, 0x00, 0x00}, 8};
 	struct MOb sendmsg2 = {CANID_BAT2 + EMERGENCY, CAN_STD, {CAN_CMD1, CAN_CMD2, CAN_CMD3, RESET_EMERYGENCY, 0x00, 0x00, 0x00, 0x00}, 8};

@@ -19,12 +19,11 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  .././driver/queue.h .././driver/can.h .././driver/timer.h \
- .././driver/bms.h .././driver/can.h .././driver/ldc.h .././driver/CAN.h \
- .././driver/TIMER.h .././driver/evcc.h .././driver/BMS.h \
- .././driver/hvmt.h .././driver/max11162.h .././driver/spi.h \
+ .././driver/bms.h .././driver/can.h .././driver/ldc.h .././driver/evcc.h \
+ .././driver/CAN.h .././driver/BMS.h .././driver/bms.h \
+ .././driver/max11162.h .././driver/spi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\compat\deprecated.h \
- .././driver/bms.h .././driver/max11162.h .././driver/hvmt.h \
- .././driver/cb350m.h
+ .././driver/hvmt.h .././driver/max11162.h .././driver/cb350m.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -82,15 +81,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 .././driver/ldc.h:
 
-.././driver/CAN.h:
-
-.././driver/TIMER.h:
-
 .././driver/evcc.h:
+
+.././driver/CAN.h:
 
 .././driver/BMS.h:
 
-.././driver/hvmt.h:
+.././driver/bms.h:
 
 .././driver/max11162.h:
 
@@ -98,10 +95,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\compat\deprecated.h:
 
-.././driver/bms.h:
+.././driver/hvmt.h:
 
 .././driver/max11162.h:
-
-.././driver/hvmt.h:
 
 .././driver/cb350m.h:

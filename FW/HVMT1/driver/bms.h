@@ -116,9 +116,9 @@ struct BMS
 	unsigned int fanFault;
 };
 
-volatile struct BMS bms[MAX_BAT];
-
-volatile unsigned int runtime[MAX_BAT];
+extern volatile struct BMS bms[MAX_BAT];
+extern volatile unsigned int bms1Runtime;
+extern volatile unsigned int bms2Runtime;
 
 void saveRackStatus(unsigned char index, char *data);
 void saveBmsStatus(uint8 index, char *data);
@@ -126,15 +126,15 @@ void saveBmsFan(uint8 index, char *data);
 void saveCellTemperatere(uint8 index, char *data);
 void saveCellVoltage(uint8 index, char *data);
 void saveModuleTemperature(uint8 index, char *data);
-void SaveModuleHumidity(uint8 index, char *data);
+void saveModuleHumidity(uint8 index, char *data);
 
 void sendBmsHeartbeat(uint8 index);
-void Send_on_Chage(uint8 index);
-void Send_off_Chage(uint8 index);
-void Send_on_DisChage(uint8 index);
-void Send_off_DisChage(uint8 index);
-void Send_on_PreChage(uint8 index);
-void Send_off_PreChage(uint8 index);
-void Send_on_Emc(uint8 index, unsigned char status);
-void Send_off_Emc(uint8 index, unsigned char status);
+void sendChargeOnCommand(uint8 index);
+void sendChargeOffCommand(uint8 index);
+void sendDischargeOnCommand(uint8 index);
+void sendDischargeOffCommand(uint8 index);
+void sendPrechargeOnCommand(uint8 index);
+void sendPrechargeOffCommand(uint8 index);
+void sendEmgencyOnCommand(uint8 index, unsigned char status);
+void sendEmgencyOffCommand(uint8 index, unsigned char status);
 #endif /* BATTERY_H_ */

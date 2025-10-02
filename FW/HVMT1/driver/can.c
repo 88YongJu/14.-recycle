@@ -281,7 +281,7 @@ void parsing(void)
 			saveHvmtCommand1(HVMT2, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_HVMT2_CMD2:
-			Save_cmd2(HVMT2, receiveMessage[receiveMessageTail].data);
+			saveHvmtCommand2(HVMT2, receiveMessage[receiveMessageTail].data);
 			break;
 						
 			default:

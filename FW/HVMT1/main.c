@@ -27,7 +27,7 @@ void canParsing(void)
 		switch(receiveMessage[receiveMessageTail].id)
 		{
 			case CANID_BAT1 :
-			runtime[INDEX_BAT1] = BMS_TIMEOUT;
+			bms1Runtime = BMS_TIMEOUT;
 			saveRackStatus(INDEX_BAT1, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT1_TEMP :
@@ -37,14 +37,14 @@ void canParsing(void)
 			saveModuleTemperature(INDEX_BAT1, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT1_HUM :
-			SaveModuleHumidity(INDEX_BAT1, receiveMessage[receiveMessageTail].data);
+			saveModuleHumidity(INDEX_BAT1, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT1_STATUS :
 			saveBmsStatus(INDEX_BAT1, receiveMessage[receiveMessageTail].data);
 			break;
 			
 			case CANID_BAT2 :
-			runtime[INDEX_BAT2] = BMS_TIMEOUT;
+			bms2Runtime = BMS_TIMEOUT;
 			saveRackStatus(INDEX_BAT2, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT2_TEMP :
@@ -54,7 +54,7 @@ void canParsing(void)
 			saveModuleTemperature(INDEX_BAT2, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT2_HUM :
-			SaveModuleHumidity(INDEX_BAT2, receiveMessage[receiveMessageTail].data);
+			saveModuleHumidity(INDEX_BAT2, receiveMessage[receiveMessageTail].data);
 			break;
 			case CANID_BAT2_STATUS :
 			saveBmsStatus(INDEX_BAT2, receiveMessage[receiveMessageTail].data);
@@ -152,44 +152,13 @@ int main(void)
 			LED_3 = ~LED_3;
 		}
 		
-		if(millis() - hvmtStatus1SendTimer >= HVMT_SEND_TIME)
-		{
-			hvmtStatus1SendTimer = millis();
-			//hvmt1Status1.data[0] = bms[INDEX_BAT1].chargeRelay | bms[INDEX_BAT1].dischargeRelay << 1 | bms[INDEX_BAT1].precharge;
-			hvmtStatus1.data[1] = HVAD1;
-			hvmtStatus1.data[2] = HVAD1 >> 8;
-			hvmtStatus1.data[3] = HVAD2;
-			hvmtStatus1.data[4] = HVAD2 >> 8;
-			sendCan(&hvmtStatus1);
-		}
-		
-		//HVB charge process for main Relay control test code
-		/*
-		if(millis() - bmsTimer >= 100)
-		{
-			bmsTimer = millis();
-			if(runtime[INDEX_BAT1])
-			{
-				sendBmsHeartbeat(INDEX_BAT1);
-				if(dcMainConrtactorStatus == MAIN_RELAY_CLOSE)	Send_on_Chage(INDEX_BAT1);
-				else Send_off_Chage(INDEX_BAT1);
-			}
-			if(runtime[INDEX_BAT1])
-			{
-				sendBmsHeartbeat(INDEX_BAT2);
-				if(dcMainConrtactorStatus == MAIN_RELAY_CLOSE)	Send_on_Chage(INDEX_BAT2);
-				else Send_off_Chage(INDEX_BAT2);
-			}
-		}
-		*/
-		
-		RY_1 = hvmtcmd[HVMT_NUM].relay1;
-		RY_2 = hvmtcmd[HVMT_NUM].relay2;
-		RY_3 = hvmtcmd[HVMT_NUM].relay3;
-		RY_4 = hvmtcmd[HVMT_NUM].relay4;
+		RY_1 = hvmtCommand[HVMT_NUM].relay1;
+		RY_2 = hvmtCommand[HVMT_NUM].relay2;
+		RY_3 = hvmtCommand[HVMT_NUM].relay3;
+		RY_4 = hvmtCommand[HVMT_NUM].relay4;
 		
 		/*
-		if(hvmtcmd[INDEX_HVMT1].keyStatus != MODE_RUN)	//runMode Check Command protocal?
+		if(hvmtCommand[INDEX_HVMT1].keyStatus != MODE_RUN)	//runMode Check Command protocal?
 		{
 			if(((396 < HVAD1) && (HVAD1 < 540)) && ((0 <= cb350m[INDEX_CB350M_1].current) && (cb350m[INDEX_CB350M_1].current <= 18000)))
 			{
@@ -213,20 +182,46 @@ int main(void)
 			}
 		}
 		*/
-		if(millis() - hvmtStatus2SendTimer >= 500)
+		
+		if(millis() - hvmtStatus1SendTimer >= HVMT_SEND_TIME)
 		{
-			hvmtStatus2SendTimer = millis();
-			hvmtStatus2.data[0] = RY_1 | RY_2 << 1 | RY_3 << 2 | RY_4 << 3;
-			sendCan(&hvmtStatus2);
+			hvmtStatus1SendTimer = millis();
+			//hvmt1Status1.data[0] = bms[INDEX_BAT1].chargeRelay | bms[INDEX_BAT1].dischargeRelay << 1 | bms[INDEX_BAT1].precharge;
+			hvmtStatus1.data[0] = RY_1 | RY_2 << 1 | RY_3 << 2 | RY_4 << 3;
+			hvmtStatus1.data[1] = HVAD1;
+			hvmtStatus1.data[2] = HVAD1 >> 8;
+			hvmtStatus1.data[3] = HVAD2;
+			hvmtStatus1.data[4] = HVAD2 >> 8;
+			sendCan(&hvmtStatus1);
 		}
+		
+		//HVB charge process for main Relay control test code
+		/*
+		if(millis() - bmsTimer >= 100)
+		{
+			bmsTimer = millis();
+			if(runtime[INDEX_BAT1])
+			{
+				sendBmsHeartbeat(INDEX_BAT1);
+				if(dcMainConrtactorStatus == MAIN_RELAY_CLOSE)	sendChargeOnCommand(INDEX_BAT1);
+				else sendChargeOffCommand(INDEX_BAT1);
+			}
+			if(bms2Runtime)
+			{
+				sendBmsHeartbeat(INDEX_BAT2);
+				if(dcMainConrtactorStatus == MAIN_RELAY_CLOSE)	sendChargeOnCommand(INDEX_BAT2);
+				else sendChargeOffCommand(INDEX_BAT2);
+			}
+		}
+		*/
 		
 		//debug Print process
 		if(millis() - debugPrintTime >= DBG_PRT_TIME)
 		{
 			debugPrintTime = millis();
+			/*
 			printf("chargeControl:%d\r\n",chargeControl);
 			printf("evcc.status:%d\r\n",evcc.status);
-			/*
 			switch(evcc.status)
 			{
 				case EVCC_IDLE:

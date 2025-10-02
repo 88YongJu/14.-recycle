@@ -15,9 +15,9 @@ driver/hvmt.d driver/hvmt.o: ../driver/hvmt.c ../driver/HVMT.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  ../driver/can.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../driver/timer.h ../driver/bms.h ../driver/ldc.h ../driver/CAN.h \
- ../driver/TIMER.h ../driver/evcc.h ../driver/BMS.h ../driver/hvmt.h \
- ../driver/max11162.h ../driver/exiom.h ../driver/spi.h \
+ ../driver/timer.h ../driver/bms.h ../driver/ldc.h ../driver/evcc.h \
+ ../driver/CAN.h ../driver/BMS.h ../driver/max11162.h ../driver/exiom.h \
+ ../driver/spi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\compat\deprecated.h
 
 ../driver/HVMT.h:
@@ -60,15 +60,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../driver/ldc.h:
 
-../driver/CAN.h:
-
-../driver/TIMER.h:
-
 ../driver/evcc.h:
 
-../driver/BMS.h:
+../driver/CAN.h:
 
-../driver/hvmt.h:
+../driver/BMS.h:
 
 ../driver/max11162.h:
 

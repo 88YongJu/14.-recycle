@@ -1,4 +1,4 @@
-driver/evcc.d driver/evcc.o: ../driver/evcc.c ../driver/EVCC.h \
+driver/ldc.d driver/ldc.o: ../driver/ldc.c ../driver/LDC.h \
  ../driver/types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -13,12 +13,12 @@ driver/evcc.d driver/evcc.o: ../driver/evcc.c ../driver/EVCC.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- ../driver/CAN.h \
+ ../driver/can.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../driver/timer.h ../driver/bms.h ../driver/can.h ../driver/ldc.h \
- ../driver/evcc.h ../driver/BMS.h
+ ../driver/timer.h ../driver/bms.h ../driver/ldc.h ../driver/evcc.h \
+ ../driver/CAN.h ../driver/BMS.h
 
-../driver/EVCC.h:
+../driver/LDC.h:
 
 ../driver/types.h:
 
@@ -48,7 +48,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
-../driver/CAN.h:
+../driver/can.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
@@ -56,10 +56,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../driver/bms.h:
 
-../driver/can.h:
-
 ../driver/ldc.h:
 
 ../driver/evcc.h:
+
+../driver/CAN.h:
 
 ../driver/BMS.h:

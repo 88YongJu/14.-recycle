@@ -14,6 +14,8 @@ driver\gio.c
 
 driver\hvmt.c
 
+driver\ldc.c
+
 driver\max11162.c
 
 driver\queue.c
